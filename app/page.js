@@ -1,20 +1,20 @@
-'use client';
-import React, {useEffect} from 'react';
-
-
+import * as React from "react";
+import Bar from "./components/Bar";
+import BarHeader from "./components/BarHeader";
 
 const Home = async () => {
- 
-useEffect(() => { 
-  window.location.href = "/exchange";
-}, []);
+  const res = await fetch("https://exchange.birrtrade.com/exchange", {cache: "no-cache"} );
+  const data = await res.json();
+  const exchange = data.exchange;
 
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="page-container">
+      <BarHeader />
+      {exchange.map((item, index) => {
+        return <Bar key={index} data={item} rank={index} />;
+      })}
     </div>
-  
   );
-}
+};
 
 export default Home;
